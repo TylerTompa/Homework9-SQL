@@ -2,18 +2,18 @@
 Secton 1
 */
 
--- We first run the USE command so that we don't have to specify the database in every query we subsequently run.
-USE sakila
+-- We first run the USE statement, so that we don't have to specify the database in every subsequent statement we run.
+USE sakila;
 
 -- 1a.
--- This returns the first_name and last_name field of every record from the table actor.
+-- This returns the first_name and last_name field of every record, from the table actor.
 SELECT first_name, last_name
 FROM actor;
 
 -- 1b.
 /*
-We use the CONCAT command to display multiple fields as one.  Here we concatenate the values of the first_name field with the values of the last_name field, in order to display the full name as one field.
-We also wrap the concatenation in an UPPER command, to ensure the query is returned in uppercase.
+We use the CONCAT function to display multiple fields as one.  Here we concatenate the values of the first_name field with the values of the last_name field, in order to display the full name as one field.
+We also wrap the concatenation in an UPPER function, to ensure the query is displayed in uppercase.
 */
 SELECT UPPER(CONCAT(first_name, " ", last_name))
 AS 'Actor Name'
@@ -24,7 +24,7 @@ Section 2
 */
 
 -- 2a.
--- This selects the actor_id, first_name, and last_name field, from the table actor, only from records where the first_name field is equal to "Joe"
+-- This returns the actor_id, first_name, and last_name field, from the table actor, only from records where the first_name field is equal to "Joe"
 SELECT actor_id, first_name, last_name
 FROM actor
 WHERE first_name = 'Joe';
@@ -62,6 +62,9 @@ Section 3
 */
 
 --3a.
+/*
+The ALTER TABLE command allows us to 
+*/
 ALTER TABLE actor
 ADD description BLOB;
 
