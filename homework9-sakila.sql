@@ -216,3 +216,75 @@ IN (
         )
 )
 ;
+
+-- 7c
+SELECT CONCAT(first_name, " ", last_name) AS cusomter_name, 
+    email
+FROM customer AS cu
+INNER JOIN address AS a
+ON cu.address_id = a.address_id
+    INNER JOIN city AS ci
+    ON a.city_id = ci.city_id
+        INNER JOIN country AS co
+        ON ci.country_id = co.country_id
+WHERE country = 'Canada';
+
+-- 7d.
+SELECT f.title AS movie_title
+FROM film AS f
+INNER JOIN film_category AS fc
+ON f.film_id = fc.film_id
+    INNER JOIN category AS c
+    ON fc.category_id = c.category_id
+WHERE c.name='Family';
+
+-- 7e.
+SELECT f.title AS movie_name,
+    COUNT(f.title) AS times_rented
+FROM rental AS r
+INNER JOIN inventory AS i
+ON r.inventory_id = i.inventory_id
+    INNER JOIN film AS f
+    ON i.film_id = f.film_id
+GROUP BY 1
+ORDER BY 2 DESC;
+
+-- 7f
+SELECT s.store_id AS store_id,
+    SUM(p.amount) AS total_money_made
+FROM store AS s
+INNER JOIN inventory AS i
+ON s.store_id = i.store_id
+    INNER JOIN rental AS r
+    ON i.inventory_id = r.inventory_id
+        INNER JOIN payment AS p
+        ON r.rental_id = p.rental_id
+GROUP BY 1;
+
+-- 7g.
+SELECT s.store_id AS store_id,
+    ci.city AS city,
+    co.country AS country
+FROM store AS s
+INNER JOIN address AS a
+ON s.address_id = a.address_id
+    INNER JOIN city AS ci
+    ON a.city_id = ci.city_id
+        INNER JOIN country AS co
+        ON ci.country_id = co.country_id;
+
+-- 7h
+SELECT c.name as category,
+    SUM(p.amount)
+FROM category AS c
+INNER JOIN film_category AS fm
+ON c.category_id = fm.category_id
+    INNER JOIN inventory AS i
+    ON fm.film_id = i.film_id
+        INNER JOIN rental AS r
+        ON i.inventory_id = r.inventory_id
+            INNER JOIN payment AS p
+            ON r.rental_id = p.rental_id
+GROUP BY 1
+ORDER BY 2 DESC
+LIMIT 5;
