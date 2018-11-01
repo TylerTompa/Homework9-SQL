@@ -540,6 +540,7 @@ Section 8
 ****************************************************************************************************/
 
 -- 8a.
+-- This creates a view of the last statement so that we can easily query the top five categories again.
 CREATE VIEW top_category_by_gross_revenue
 AS (
     SELECT c.name AS category,
@@ -559,8 +560,18 @@ AS (
 );
 
 -- 8b.
+/*
+This selects every field,
+from every record,
+from the view top_category_by_gross_revenue,
+that we created in part 8a.
+*/
 SELECT *
 FROM top_category_by_gross_revenue;
 
 -- 8c.
+/*
+This deletes the view top_category_by_gross_revenue,
+that we created in problem 8a.
+*/
 DROP VIEW top_category_by_gross_revenue;
