@@ -30,20 +30,20 @@ Section 2
 ****************************************************************************************************/
 
 -- 2a.
--- This returns the field actor_id, first_name, and last_name, from the table actor, only from records where the field first_name is equal to 'Joe.'
+-- This selects the field actor_id, first_name, and last_name, from the table actor, only from records where the field first_name is equal to 'Joe.'
 SELECT actor_id, first_name, last_name
 FROM actor
 WHERE first_name = 'Joe';
 
 -- 2b.
--- This returns the field first_name and last_name, from the table actor, only from records where 'GEN' appears anywhere in the field last_name.
+-- This selects the field first_name and last_name, from the table actor, only from records where 'GEN' appears anywhere in the field last_name.
 SELECT first_name, last_name
 FROM actor
 WHERE last_name LIKE '%GEN%';
 
 -- 2c.
 /*
-This returns the field first_name, and last_name, from the table actor, only from records where 'LI' appears anywhere in the last_name field.  Furthermore, we order the results in alphabetical order by the values of the second field selected- or the last_name field, and thereafter we order by the values of the first field selected- or the first_name field.
+This selects the field first_name, and last_name, from the table actor, only from records where 'LI' appears anywhere in the last_name field.  Furthermore, we order the results in alphabetical order by the values of the second field selected- or the last_name field, and thereafter we order by the values of the first field selected- or the first_name field.
 */
 SELECT first_name, last_name
 FROM actor
@@ -81,26 +81,26 @@ Section 4
 ****************************************************************************************************/
 
 -- 4a.
--- We return the field last_name, and count how many actors have that last name, from the table actor.  We then group by last_name.
+-- This selects the field last_name, and counts how many actors have each last name, from the table actor.  We group by last_name.
 SELECT last_name, COUNT(last_name)
 FROM actor
 GROUP BY 1;
 
 -- 4b.
--- We return the field last_name, and count how many actors have that last name, from the table actor, only for last names that at least 2 actors have.  We then group by last_name.
+-- This selects the field last_name, and counts how many actors have that last name, from the table actor, only for last names that at least 2 actors have.  We group by last_name.
 SELECT last_name, COUNT(last_name)
 FROM actor
 GROUP BY 1
 HAVING COUNT(last_name) > 1;
 
 -- 4c.
--- We update the table actor, by changing the value of the field first_name to "HARPO" for any record where actor_id is 172.
+-- This updates the table actor, by changing the value of the field first_name to "HARPO" for any record where actor_id is 172.
 UPDATE actor
 SET first_name = 'HARPO'
 WHERE actor_id = 172;
 
 -- 4d.
--- We update the table actor, by changing the value of the field first_name to "GROUCHO" for any record where first_name is "HARPO".
+-- This updates the table actor, by changing the value of the field first_name to "GROUCHO" for any record where first_name is "HARPO".
 UPDATE actor
 SET first_name = 'GROUCHO'
 WHERE first_name = 'HARPO';
@@ -119,37 +119,54 @@ Section 6
 ****************************************************************************************************/
 
 -- 6a.
--- We return the field first_name and last_name, from the table staff, as well as the field address from the table address, for all records,.  We use a left join on the common column address_id.
+-- This selects the field first_name and last_name, from the table staff, as well as the field address from the table address, for all records.  We use an inner join on the common column address_id.
 
 SELECT s.first_name AS first_name,
     s.last_name AS last_name,
     a.address
-FROM staff as s
-LEFT JOIN address as a
+FROM staff AS s
+INNER JOIN address AS a
 ON s.address_id = a.address_id;
 
 -- 6b.
 /*
-We return the field first_name and last_name,, from the table staff, and use the CONCAT function to display the full name as one field.  We then return the sum of the field amount from the payment table, of records for the month of August 2005, and group by name, so that we can see how much money each staff member rung up during this month.  We perform a left join using the common column staff_id.  
+This shows us how much money each staff member rung up during the month of August 2005.
+
+This selects the field first_name and last_name, from the table staff.  We then return the sum of the field amount from the payment table, of records for the month of August 2005.  We perform an inner join using the common column staff_id, and group by the field first_name.
 */
-SELECT CONCAT(s.first_name, " ", s.last_name) as staff_member,
-    SUM(p.amount) as total_amount_rung_up
-FROM staff as s
-LEFT JOIN payment as p
+SELECT s.first_name,  s.last_name,
+    SUM(p.amount) AS total_amount_rung_up
+FROM staff AS s
+INNER JOIN payment AS p
 ON s.staff_id = p.staff_id
 WHERE YEAR(p.payment_date) = 2005
     AND MONTH(p.payment_date) = 8
 GROUP BY 1;
 
 -- 6c.
+/*
+This selects the field title, from the table film, and counts the number of actors in each film, by joining the table film_actor with an inner join, on the common column film_id, and counting the number of fields in the column actor_id, from the table film_actor.  We group by the field first_name. 
+*/
 SELECT f.title AS film,
     COUNT(fa.actor_id) AS number_of_actors
-FROM film as f
-INNER JOIN film_actor as fa
+FROM film AS f
+INNER JOIN film_actor AS fa
 ON f.film_id = fa.film_id
 GROUP BY 1;
 
 -- 6d.
+/*
+This counts the number of films with the title 'Hunchback Impossible' in the inventory.  We use an inner join with the tables film and inventory on the common column film_id, and count all fields where the title field is equal to 'Hunchback Impossible.'
+*/
+
+SELECT COUNT(*)
+FROM film AS f
+INNER JOIN inventory AS i
+ON f.film_id = i.film_id
+WHERE title='Hunchback Impossible';
+
+-- THIS IS AN ALTERNATIVE WAY TO SOLVE 6D USING A SUBQUERY.
+-- ASK SOMEONE IF THIS IS A POOR WAY OF ACHIEVING OUR GOAL.
 SELECT COUNT(*) AS copies_in_inventory
 FROM inventory
 WHERE film_id
@@ -161,11 +178,16 @@ IN (
 
 
 -- 6e.
+/*
+This lists each customer, and the total amount they paid on films.
+
+This selects the field field first_name and last_name, from the table customer,and joins the table payment, using an inner join, on the common column customer_id.  We then return the sum of the field amount, from the table payment, and group by last name.
+*/
 SELECT c.first_name,
     c.last_name,
     SUM(p.amount)
 FROM customer AS c
-LEFT JOIN payment AS p
+INNER JOIN payment AS p
 ON c.customer_id = p.customer_id
 GROUP BY 2;
 
@@ -178,7 +200,7 @@ FROM customer;
 SELECT COUNT(DISTINCT last_name)
 FROM customer;
 
-Both queries returned the same number.
+Both queries returned the same number, so we can confidently use a GROUP BY clause in our previous statement.
 */
 
 /****************************************************************************************************
@@ -274,7 +296,7 @@ ON s.address_id = a.address_id
         ON ci.country_id = co.country_id;
 
 -- 7h
-SELECT c.name as category,
+SELECT c.name AS category,
     SUM(p.amount)
 FROM category AS c
 INNER JOIN film_category AS fm
@@ -296,7 +318,7 @@ Section 8
 -- 8a.
 CREATE VIEW top_category_by_gross_revenue
 AS (
-    SELECT c.name as category,
+    SELECT c.name AS category,
         SUM(p.amount)
     FROM category AS c
     INNER JOIN film_category AS fm
