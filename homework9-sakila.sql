@@ -14,7 +14,7 @@ Secton 1
 ****************************************************************************************************/
 
 -- 1a.
--- This returns the field first_name and last_name, of every record, from the table actor.
+-- This selects the field first_name and last_name, of every record, from the table actor.
 SELECT first_name, last_name
 FROM actor;
 
@@ -30,25 +30,25 @@ Section 2
 ****************************************************************************************************/
 
 -- 2a.
--- This returns the field actor_id, first_name, and last_name, from the table actor, only from records where the field first_name is equal to "Joe"
+-- This returns the field actor_id, first_name, and last_name, from the table actor, only from records where the field first_name is equal to 'Joe.'
 SELECT actor_id, first_name, last_name
 FROM actor
 WHERE first_name = 'Joe';
 
 -- 2b.
--- This returns the field actor_id, first_name, and last_name, from the table actor, only from records where "GEN" appears anywhere in the last_name field.
-SELECT actor_id, first_name, last_name
+-- This returns the field first_name and last_name, from the table actor, only from records where 'GEN' appears anywhere in the field last_name.
+SELECT first_name, last_name
 FROM actor
 WHERE last_name LIKE '%GEN%';
 
 -- 2c.
 /*
-This returns the field actor_id, first_name, and last_name, from the table actor, only from records where "LI" appears anywhere in the last_name field.  Furthermore, we order the results in alphabetical order by the values of the third field selected- or the last_name field, and thereafter we order by the values of the second field selected- or the first_name field.
+This returns the field first_name, and last_name, from the table actor, only from records where 'LI' appears anywhere in the last_name field.  Furthermore, we order the results in alphabetical order by the values of the second field selected- or the last_name field, and thereafter we order by the values of the first field selected- or the first_name field.
 */
-SELECT actor_id, first_name, last_name
+SELECT first_name, last_name
 FROM actor
 WHERE last_name LIKE '%LI%'
-ORDER BY 3, 2;
+ORDER BY 2, 1;
 
 -- 2d.
 -- This selects the field country_id and country, from the table country, only from records where the value of the country field is equal to any of the following values: Afghanistan, Bangladesh, China.
