@@ -66,13 +66,13 @@ Section 3
 
 -- 3a.
 -- EDIT THIS COMMENT.  EDIT THIS COMMENT.  EDIT THIS COMMENT.  EDIT THIS COMMENT.  EDIT THIS COMMENT.  EDIT THIS COMMENT.  
--- We use the ALTER TABLE clause to add a column to our actor table.  The column we add will be used to store a description for each actor.
+-- We use the ALTER TABLE clause to add a column to our table actor.  The column we add will be used to store a description for each actor.
 -- EDIT THIS COMMENT.  EDIT THIS COMMENT.  EDIT THIS COMMENT.  EDIT THIS COMMENT.  EDIT THIS COMMENT.  EDIT THIS COMMENT.  
 ALTER TABLE actor
 ADD description BLOB;
 
 -- 3b.
--- We use the ALTER TABLE clause to drop the description column from the table actors.
+-- We use the ALTER TABLE clause to drop the column description from the table actor.
 ALTER TABLE actor
 DROP COLUMN description;
 
@@ -81,13 +81,13 @@ Section 4
 ****************************************************************************************************/
 
 -- 4a.
--- We return the field last_name, and calculate how many actors have that last name, from the table actor.  We group by last_name in order to display each unique value of the last_name column one time.
+-- We return the field last_name, and count how many actors have that last name, from the table actor.  We then group by last_name.
 SELECT last_name, COUNT(last_name)
 FROM actor
 GROUP BY 1;
 
 -- 4b.
--- We return the last_name field, and calculate how many actors have that last name, from the table actor, only for last names that at least 2 actors have.  We group by last_name in order to display each unique value of the last_name column one time.
+-- We return the field last_name, and count how many actors have that last name, from the table actor, only for last names that at least 2 actors have.  We then group by last_name.
 SELECT last_name, COUNT(last_name)
 FROM actor
 GROUP BY 1
