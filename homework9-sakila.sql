@@ -288,3 +288,33 @@ ON c.category_id = fm.category_id
 GROUP BY 1
 ORDER BY 2 DESC
 LIMIT 5;
+
+/****************************************************************************************************
+Section 8
+****************************************************************************************************/
+
+-- 8a.
+CREATE VIEW top_category_by_gross_revenue
+AS (
+    SELECT c.name as category,
+        SUM(p.amount)
+    FROM category AS c
+    INNER JOIN film_category AS fm
+    ON c.category_id = fm.category_id
+        INNER JOIN inventory AS i
+        ON fm.film_id = i.film_id
+            INNER JOIN rental AS r
+            ON i.inventory_id = r.inventory_id
+                INNER JOIN payment AS p
+                ON r.rental_id = p.rental_id
+    GROUP BY 1
+    ORDER BY 2 DESC
+    LIMIT 5
+);
+
+-- 8b.
+SELECT *
+FROM top_category_by_gross_revenue;
+
+-- 8c.
+DROP VIEW top_category_by_gross_revenue;
