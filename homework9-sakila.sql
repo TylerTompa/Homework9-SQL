@@ -89,9 +89,10 @@ Section 3
 ****************************************************************************************************/
 
 -- 3a.
--- EDIT THIS COMMENT.  EDIT THIS COMMENT.  EDIT THIS COMMENT.  EDIT THIS COMMENT.  EDIT THIS COMMENT.  EDIT THIS COMMENT.  
--- We use the ALTER TABLE clause to add a column to our table actor.  The column we add will be used to store a description for each actor.
--- EDIT THIS COMMENT.  EDIT THIS COMMENT.  EDIT THIS COMMENT.  EDIT THIS COMMENT.  EDIT THIS COMMENT.  EDIT THIS COMMENT.  
+/* 
+We use the ALTER TABLE clause to add a column to our table actor.
+The column we add will be a BLOB datatype used to store a description for each actor.
+*/
 ALTER TABLE actor
 ADD description BLOB;
 
@@ -155,9 +156,9 @@ WHERE first_name = 'HARPO';
 Section 5
 ****************************************************************************************************/
 -- 5
--- EDIT THIS COMMENT.  EDIT THIS COMMENT.  EDIT THIS COMMENT.  EDIT THIS COMMENT.  EDIT THIS COMMENT.  EDIT THIS COMMENT.  
--- The SHOW CREATE TABLE statement is used to show the exact code that produced a table.
--- EDIT THIS COMMENT.  EDIT THIS COMMENT.  EDIT THIS COMMENT.  EDIT THIS COMMENT.  EDIT THIS COMMENT.  EDIT THIS COMMENT.  
+/*  
+The SHOW CREATE TABLE statement is used to show the exact code that produced a table.
+*/  
 SHOW CREATE TABLE actor;
 
 /****************************************************************************************************
@@ -244,18 +245,6 @@ FROM film AS f
 INNER JOIN inventory AS i
 ON f.film_id = i.film_id
 WHERE title='Hunchback Impossible';
-
--- THIS IS AN ALTERNATIVE WAY TO SOLVE 6D USING A SUBQUERY.
--- ASK SOMEONE IF THIS IS A POOR WAY OF ACHIEVING OUR GOAL.
-SELECT COUNT(*) AS copies_in_inventory
-FROM inventory
-WHERE film_id
-IN (
-    SELECT film_id
-    FROM film
-    WHERE title = 'Hunchback Impossible'
-);
-
 
 -- 6e.
 /*
